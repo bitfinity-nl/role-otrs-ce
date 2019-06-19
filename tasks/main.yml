@@ -1,0 +1,24 @@
+---
+# Title: OTRS-CE community edition
+#
+# Authtor: bitfinity-nl
+# File: defaults/ubt-1804-amd64.yml
+#
+# Description:
+#   OTRS Community Edition Open Source 
+#   help Desk Software and free features
+
+- name: "Type:mysql, For OS: Ubuntu 18.04LTS, Arch: amd64, State: Enabled"
+  import_tasks: ubt-1804-amd64-mysql.yml
+  when:
+    - ansible_distribution_version == '18.04'
+    - ansible_architecture == 'x86_64'
+    
+- name: "Type:otrs, For OS: Ubuntu 18.04LTS, Arch: amd64, State: Enabled"
+  import_tasks: ubt-1804-amd64-otrs.yml
+  when:
+    - ansible_distribution_version == '18.04'
+    - ansible_architecture == 'x86_64'
+
+
+

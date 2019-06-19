@@ -1,0 +1,56 @@
+---
+# Title: OTRS-CE community edition
+#
+# Authtor: bitfinity-nl
+# File: defaults/ubt-1804-amd64.yml
+#
+# Description:
+#   OTRS Community Edition Open Source 
+#   help Desk Software and free features
+
+
+# -- OTRS settings --
+#
+# Variable(s):
+#   otrs_version      : 'otrs-6.0.19'                                            # Version of OTRS
+#   otrs_download_url : 'https://ftp.otrs.org/pub/otrs/{{ otrs_version }}.zip'   # Url where to download the resources.
+#   otrs_dest         : '/opt/otrs-workingdir/releases/{{ otrs_version }}/       # Destination to unarchive the resources.
+#   otrs_backups      : '/opt/otrs-workingdir/backups/'                          # Where to place the OTRS backups
+#
+otrs_version      : 'otrs-6.0.19'
+otrs_download_url : 'https://ftp.otrs.org/pub/otrs/{{ otrs_version }}.zip'
+otrs_dest         : '/opt/otrs-workingdir/releases/'
+otrs_backups      : '/opt/otrs-workingdir/backups/'
+
+# -- MySQL User settings --
+#
+# Variable(s):
+#   otrs_sys_user : 'root'     # Administrative User.
+#   otrs_sys_pass : 'password' # Administrative password.
+#   otrs_db_name  : 'otrs'     # Database name. 
+#   otrs_db_user  : 'otrs'     # Database user.
+#   otrs_db_pass  : 'password' # Database password.
+#   
+otrs_sys_user : 'root'
+otrs_sys_pass : 'password'
+otrs_db_name  : 'otrs' 
+otrs_db_user  : 'otrs'
+otrs_db_pass  : 'password'
+
+# -- MySQL Database settings --
+#
+# File: my.cnf.j2 --> my-otrs.cnf
+#
+# Variable(s):
+#   otrs_my_max_allowed_packet   : '64M'
+#   otrs_my_query_cache_size     : '36M'
+#   otrs_my_innodb_log_file_size : '256M'
+#   otrs_my_character_set_server : 'utf8'
+#
+# Comment:
+#   See MySQL documentation for more information.
+#
+otrs_my_max_allowed_packet   : '64M'
+otrs_my_query_cache_size     : '36M'
+otrs_my_innodb_log_file_size : '256M'
+otrs_my_character_set_server : 'utf8' 

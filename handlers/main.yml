@@ -1,0 +1,20 @@
+---
+# Title: OTRS-CE community edition
+#
+# Authtor: bitfinity-nl
+# File: handlers/ubt-1804-amd64.yml
+#
+# Description:
+#   OTRS Community Edition Open Source 
+#   help Desk Software and free features
+
+- name: restart_apache2
+  systemd:
+    state: restarted
+    name: apache2
+
+- name: restart_mysql
+  systemd:
+    state: restarted
+    name: mysql
+    
