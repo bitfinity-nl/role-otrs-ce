@@ -1,0 +1,78 @@
+---
+# Title: OTRS-CE community edition
+#
+# Authtor: bitfinity-nl
+# File: defaults/ubt-1804-amd64.yml
+#
+# Description:
+#   OTRS Community Edition Open Source 
+#   help Desk Software and free features
+
+- name: "Insert/Update LDAP/Active Directory configuration"
+  blockinfile:
+    path: /opt/otrs/Kernel/Config.pm
+    insertafter: "Self->{CheckMXRecord} = .;"
+    block: |2
+    
+          # <!-- Active Directory-->
+
+          # This is an example configuration for an LDAP auth. backend.
+          # (Make sure Net::LDAP is installed!)
+          $Self->{'AuthModule'} = 'Kernel::System::Auth::LDAP';
+          $Self->{'AuthModule::LDAP::Host'} = '{{ otrs_ad_dc }}';
+          $Self->{'AuthModule::LDAP::BaseDN'} = '{{ otrs_ad_basedn }}';
+          $Self->{'AuthModule::LDAP::UID'} = 'sAMAccountName';
+
+          # Check if the user is allowed to auth in a posixGroup
+          # (e. g. user needs to be in a group xyz to use otrs)
+          $Self->{'AuthModule::LDAP::GroupDN'} = '{{ otrs_ad_groupdn }}';
+          $Self->{'AuthModule::LDAP::AccessAttr'} = '{{ otrs_ad_accessattr }}';
+          # for ldap posixGroups objectclass (just uid)
+          #  $Self->{'AuthModule::LDAP::UserAttr'} = 'UID';
+          # for non ldap posixGroups objectclass (with full user dn)
+          $Self->{'AuthModule::LDAP::UserAttr'} = '{{ otrs_ad_userattr }}';
+
+          # The following is valid but would only be necessary if the
+          # anonymous user do NOT have permission to read from the LDAP tree
+          $Self->{'AuthModule::LDAP::SearchUserDN'} = '{{ otrs_ad_searchuserdn }}';
+          $Self->{'AuthModule::LDAP::SearchUserPw'} = '{{ otrs_ad_searchuserpw }}';
+
+          # in case you want to add always one filter to each ldap query, use
+          # this option. e. g. AlwaysFilter => '(mail=*)' or AlwaysFilter => '(objectclass=user)'
+          $Self->{'AuthModule::LDAP::AlwaysFilter'} = '';
+
+          # in case you want to add a suffix to each login name, then
+          # you can use this option. e. g. user just want to use user but
+          # in your ldap directory exists user@domain.com
+          #    $Self->{'AuthModule::LDAP::UserSuffix'} = '@domain.com';
+
+          # Net::LDAP new params (if needed - for more info see perldoc Net::LDAP)
+          $Self->{'AuthModule::LDAP::Params'} = {
+              port => 389,
+              timeout => 120,
+              async => 0,
+              version => 3,
+          };
+
+          # Now sync data with OTRS DB
+          $Self->{'AuthSyncModule'} = 'Kernel::System::Auth::Sync::LDAP';
+          $Self->{'AuthSyncModule::LDAP::Host'} = '{{ otrs_ad_dc }}';
+          $Self->{'AuthSyncModule::LDAP::BaseDN'} = '{{ otrs_ad_basedn }}';
+          $Self->{'AuthSyncModule::LDAP::UID'} = '{{ otrs_ad_uid }}';
+          $Self->{'AuthSyncModule::LDAP::SearchUserDN'} = '{{ otrs_ad_searchuserdn }}';
+          $Self->{'AuthSyncModule::LDAP::SearchUserPw'} = '{{ otrs_ad_searchuserpw }}';
+
+          $Self->{'AuthSyncModule::LDAP::UserSyncMap'} = {
+              # DB -> LDAP
+              UserFirstname => 'givenName',
+              UserLastname  => 'sn',
+              UserEmail     => 'mail',
+          };
+
+          # AuthSyncModule::LDAP::UserSyncInitialGroups
+          # (sync following group with rw permission after initial create of first agent
+          # login)
+          $Self->{'AuthSyncModule::LDAP::UserSyncInitialGroups'} = [
+              'users',
+          ];
+

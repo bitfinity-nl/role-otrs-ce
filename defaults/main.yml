@@ -22,6 +22,7 @@ otrs_download_url : 'https://ftp.otrs.org/pub/otrs/{{ otrs_version }}.zip'
 otrs_dest         : '/opt/otrs-workingdir/releases/'
 otrs_backups      : '/opt/otrs-workingdir/backups/'
 
+
 # -- MySQL User settings --
 #
 # Variable(s):
@@ -36,6 +37,7 @@ otrs_sys_pass : 'password'
 otrs_db_name  : 'otrs' 
 otrs_db_user  : 'otrs'
 otrs_db_pass  : 'password'
+
 
 # -- MySQL Database settings --
 #
@@ -53,4 +55,31 @@ otrs_db_pass  : 'password'
 otrs_my_max_allowed_packet   : '64M'
 otrs_my_query_cache_size     : '36M'
 otrs_my_innodb_log_file_size : '256M'
-otrs_my_character_set_server : 'utf8' 
+otrs_my_character_set_server : 'utf8'
+
+
+# -- AD/LDAP (authentication) backend configuration --
+#
+# Variable(s): 
+#   otrs_ad_dc           : 'dc01.example.net'                                                      # IP or hostname to DC or LDAP server.
+#   otrs_ad_basedn       : 'ou=example,dc=example,dc=net'                                          # Base DN (for searching users/agents).
+#   otrs_ad_uid          : 'sAMAccountName'                                                        # AD/LDAP authenticaton (default=sAMAccountName).
+#   otrs_ad_groupdn      : 'cn=app_otrs_agent,ou=applications,ou=resources,{{ otrs_ad_basedn }}'   # Agents must be member of a security group.
+#   otrs_ad_accessattr   : 'member'                                                                # Attribute to check if the user is member to the specificied security group.
+#   otrs_ad_searchuserdn : 'CN=svc_otrs,OU=Service Accounts,{{ otrs_ad_basedn }}'                  # Service account for reading AD/LDAP. 
+#   otrs_ad_searchuserpw : 'Atyourserv1c3'                                                         # Password for service account.
+#
+# Comment:
+#   For more information read:
+#     - file: tasks/ldap-configuration
+#     - url: https://doc.otrs.com/doc/manual/admin/6.0/en/html/external-backends.html
+#
+otrs_ad_dc           : '{{ def_ad_dc01 }}'
+otrs_ad_basedn       : '{{ def_ad_basedn }}'
+otrs_ad_uid          : 'sAMAccountName'
+otrs_ad_groupdn      : 'cn=app_otrs_agent,ou=applications,ou=resources,{{ otrs_ad_basedn }}'
+otrs_ad_accessattr   : 'member'
+otrs_ad_userattr     : 'DN'
+otrs_ad_searchuserdn : 'CN=svc_otrs,OU=Service Accounts,{{ otrs_ad_basedn }}'
+otrs_ad_searchuserpw : 'Atyourserv1c3'
+
