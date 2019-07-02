@@ -61,6 +61,7 @@ otrs_my_character_set_server : 'utf8'
 # -- AD/LDAP (authentication) backend configuration --
 #
 # Variable(s): 
+#   otrs_ad_status       : 'disabled'                                                              # Enable AD/LDAP authentication (Leave First run disabled).  
 #   otrs_ad_dc           : 'dc01.example.net'                                                      # IP or hostname to DC or LDAP server.
 #   otrs_ad_basedn       : 'ou=example,dc=example,dc=net'                                          # Base DN (for searching users/agents).
 #   otrs_ad_uid          : 'sAMAccountName'                                                        # AD/LDAP authenticaton (default=sAMAccountName).
@@ -74,6 +75,7 @@ otrs_my_character_set_server : 'utf8'
 #     - file: tasks/ldap-configuration
 #     - url: https://doc.otrs.com/doc/manual/admin/6.0/en/html/external-backends.html
 #
+otrs_ad_status       : 'disabled'
 otrs_ad_dc           : '{{ def_ad_dc01 }}'
 otrs_ad_basedn       : '{{ def_ad_basedn }}'
 otrs_ad_uid          : 'sAMAccountName'
