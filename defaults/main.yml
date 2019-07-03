@@ -70,12 +70,18 @@ otrs_my_character_set_server : 'utf8'
 #   otrs_ad_searchuserdn : 'CN=svc_otrs,OU=Service Accounts,{{ otrs_ad_basedn }}'                  # Service account for reading AD/LDAP. 
 #   otrs_ad_searchuserpw : 'Atyourserv1c3'                                                         # Password for service account.
 #
+#   -- Administrative account for OTRS --
+#   otrs_ad_account      : 'adm_otrs'                                                              # AD/LDAP administrative account for OTRS (should exist in AD/LDAP).
+#   otrs_ad_firstname    : '{{ otrs_ad_account }}'                                                 # Firstname of the administrative account.
+#   otrs_ad_lastname     : '{{ otrs_ad_account }}'                                                 # Lastname of the administrative account.
+#   otrs_ad_email        : 'adm_otrs@example.com'                                                  # E-mail address of the administrative account.
+#
 # Comment:
 #   For more information read:
 #     - file: tasks/ldap-configuration
 #     - url: https://doc.otrs.com/doc/manual/admin/6.0/en/html/external-backends.html
 #
-otrs_ad_status       : 'disabled'
+otrs_ad_status       : 'enabled'
 otrs_ad_dc           : '{{ def_ad_dc01 }}'
 otrs_ad_basedn       : '{{ def_ad_basedn }}'
 otrs_ad_uid          : 'sAMAccountName'
@@ -85,3 +91,7 @@ otrs_ad_userattr     : 'DN'
 otrs_ad_searchuserdn : 'CN=svc_otrs,OU=Service Accounts,{{ otrs_ad_basedn }}'
 otrs_ad_searchuserpw : 'Atyourserv1c3'
 
+otrs_ad_account      : 'adm_otrs'
+otrs_ad_firstname    : '{{ otrs_ad_account }}'
+otrs_ad_lastname     : '{{ otrs_ad_account }}'
+otrs_ad_email        : 'adm_otrs@example.com'

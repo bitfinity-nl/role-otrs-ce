@@ -119,6 +119,12 @@
     rule: allow
     name: Apache
 
+- name: "Copy /opt/otrs/var/cron/otrs_daemon.dist to /opt/otrs/var/cron/otrs_daemon"
+  copy:
+    src: /opt/otrs/var/cron/otrs_daemon.dist
+    dest: /opt/otrs/var/cron/otrs_daemon
+    remote_src: yes
+
 - name: "Start Deamons & Cron"
   raw: "{{ item }}"
   with_items:

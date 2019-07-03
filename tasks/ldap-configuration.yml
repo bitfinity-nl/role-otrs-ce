@@ -8,6 +8,17 @@
 #   OTRS Community Edition Open Source 
 #   help Desk Software and free features
 
+- name: "Add AD/LDAP administrative user to OTRS"
+  raw: sudo su - otrs -c "/opt/otrs/bin/otrs.Console.pl Admin::User::Add --user-name {{ otrs_ad_account }} --first-name {{ otrs_ad_firstname }} --last-name {{ otrs_ad_lastname }} --email-address {{ otrs_ad_email }} --quiet"
+  ignore_errors: yes
+
+- name: "Add agent adm_otrs to group admin/stats/users with rw permissions"
+  raw: sudo su - otrs -c "/opt/otrs/bin/otrs.Console.pl Admin::Group::UserLink --user-name {{ otrs_ad_account }} --group-name {{ item }} --permission rw"
+  with_items:
+    - admin
+    - stats
+    - users
+
 - name: "Insert/Update LDAP/Active Directory configuration"
   blockinfile:
     path: /opt/otrs/Kernel/Config.pm
