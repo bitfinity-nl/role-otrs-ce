@@ -53,10 +53,10 @@
     name: "{{ item }}"
   with_items:
     - perl
-#    - headers
-#    - version
-#    - deflate
-#    - filter
+    - headers
+    - version
+    - deflate
+    - filter
     - proxy
     - proxy_http
     - proxy_wstunnel
