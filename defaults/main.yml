@@ -17,7 +17,7 @@
 #   otrs_dest         : '/opt/otrs-workingdir/releases/{{ otrs_version }}/       # Destination to unarchive the resources.
 #   otrs_backups      : '/opt/otrs-workingdir/backups/'                          # Where to place the OTRS backups
 #
-otrs_version      : 'otrs-6.0.19'
+otrs_version      : 'otrs-6.0.20'
 otrs_download_url : 'https://ftp.otrs.org/pub/otrs/{{ otrs_version }}.zip'
 otrs_dest         : '/opt/otrs-workingdir/releases/'
 otrs_backups      : '/opt/otrs-workingdir/backups/'
@@ -82,7 +82,7 @@ otrs_my_character_set_server : 'utf8'
 #     - url: https://doc.otrs.com/doc/manual/admin/6.0/en/html/external-backends.html
 #
 otrs_ad_status       : 'enabled'
-otrs_ad_dc           : '{{ def_ad_dc01 }}'
+otrs_ad_dc           : '{{ def_ad_dc_01 }}'
 otrs_ad_basedn       : '{{ def_ad_basedn }}'
 otrs_ad_uid          : 'sAMAccountName'
 otrs_ad_groupdn      : 'cn=app_otrs_agent,ou=applications,ou=resources,{{ otrs_ad_basedn }}'
