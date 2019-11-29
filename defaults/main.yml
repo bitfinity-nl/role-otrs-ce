@@ -32,8 +32,8 @@ otrs_backups      : '/opt/otrs-workingdir/backups/'
 #   otrs_db_user  : 'otrs'     # Database user.
 #   otrs_db_pass  : 'password' # Database password.
 #   
-otrs_sys_user : 'root'
-otrs_sys_pass : 'password'
+otrs_sys_user : '{{ def_mysql_user }}'
+otrs_sys_pass : '{{ def_mysql_pass }}'
 otrs_db_name  : 'otrs' 
 otrs_db_user  : 'otrs'
 otrs_db_pass  : 'password'
