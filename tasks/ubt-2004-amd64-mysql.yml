@@ -1,0 +1,65 @@
+---
+# Title: OTRS-CE community edition
+#
+# Authtor: bitfinity-nl
+# File: tasks/ubt-2004-amd64-mysql.yml
+#
+# Description:
+#   OTRS Community Edition Open Source 
+#   help Desk Software and free features
+
+- name: "Tuning MySQL server"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: 'mysql/my.cnf.j2', dest: '/etc/mysql/my.cnf'}
+  notify: restart_mysql
+
+- name: "Workaround to load custom settings my.cnf at the end"
+  file:
+    src: /etc/mysql/my.cnf
+    dest: /etc/mysql/mysql.conf.d/z-loadlast-my.cnf
+    state: link
+  notify: restart_mysql
+
+- name: "Create OTRS database"
+  mysql_db:
+    name: "{{ otrs_db_name }}"
+    encoding: utf8
+    state: present
+    login_user: "{{ otrs_sys_user }}"
+    login_password: "{{ otrs_sys_pass }}"
+  register: otrs_db_state
+
+- name: "Create user {{ otrs_db_user }} and grant all privileges on MySQL database {{ otrs_db_name }}"
+  mysql_user:
+    name: "{{ otrs_db_user }}"
+    password: "{{ otrs_db_pass }}"
+    priv: "{{ otrs_db_name }}.*:ALL,GRANT"
+    state: present
+    login_user: "{{ otrs_sys_user }}"
+    login_password: "{{ otrs_sys_pass }}"
+
+- name: "Display database"
+  debug:
+    msg: "{{ otrs_db_state }}"
+
+- name: "Import databases"
+  mysql_db:
+    state: import
+    name: "{{ otrs_db_name }}"
+    target: "{{ item }}"
+    login_user: "{{ otrs_sys_user }}"
+    login_password: "{{ otrs_sys_pass }}"
+  with_items:
+    - /opt/otrs/scripts/database/otrs-schema.mysql.sql
+    - /opt/otrs/scripts/database/otrs-initial_insert.mysql.sql
+    - /opt/otrs/scripts/database/otrs-schema-post.mysql.sql
+  when: otrs_db_state.changed == true
+  notify:
+    - restart_mysql
+    - restart_apache2
