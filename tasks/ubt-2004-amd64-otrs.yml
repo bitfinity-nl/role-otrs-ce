@@ -67,13 +67,13 @@
     path: "{{ item }}"
     state: directory
   with_items:
-    - "{{ otrs_dest }}"
+    - "/opt/otrs"
     - "{{ otrs_backups }}"
 
 - name: "Dowload sources from GIT"
   git:
     repo: https://github.com/OTRS/otrs.git
-    dest: "{{ otrs_dest }}"
+    dest: "/opt/otrs"
 
 #- name: "Download sources from OTRS"
 #  unarchive: 
@@ -81,11 +81,11 @@
 #    dest: "{{ otrs_dest }}"
 #    remote_src: yes
 
-- name: "Create symlink from {{ otrs_dest }} to /opt/otrs"
-  file:
-    src: "{{ otrs_dest }}/{{ otrs_version }}"
-    dest: /opt/otrs
-    state: link
+#- name: "Create symlink from {{ otrs_dest }} to /opt/otrs"
+#  file:
+#    src: "{{ otrs_dest }}"
+#    dest: /opt/otrs
+#    state: link
 
 - name: "Create local group otrs for service account otrs user(s)"
   group:
