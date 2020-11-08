@@ -46,6 +46,7 @@
     - libnet-ldap-perl 
     - libio-socket-ssl-perl
     - libdbd-mysql-perl
+    - libmoo-perl
 
 - name: "Enable Apache modules"
   apache2_module:
