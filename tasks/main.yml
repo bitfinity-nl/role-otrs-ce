@@ -20,13 +20,13 @@
     - ansible_distribution_version == '18.04'
     - ansible_architecture == 'x86_64'
 
-- name: "Type:otrs, For OS: Ubuntu 18.04LTS, Arch: amd64, State: Enabled"
+- name: "Type:otrs, For OS: Ubuntu 20.04LTS, Arch: amd64, State: Enabled"
   import_tasks: ubt-2004-amd64-otrs.yml
   when:
     - ansible_distribution_version == '20.04'
     - ansible_architecture == 'x86_64'
 
-- name: "Type:mysql, For OS: Ubuntu 18.04LTS, Arch: amd64, State: Enabled"
+- name: "Type:mysql, For OS: Ubuntu 20.04LTS, Arch: amd64, State: Enabled"
   import_tasks: ubt-2004-amd64-mysql.yml
   when:
     - ansible_distribution_version == '20.04'
