@@ -68,7 +68,7 @@
     state: directory
   with_items:
     - "/opt/otrs"
-    - "{{ otrs_backups }}"
+#    - "{{ otrs_backups }}"
 
 - name: "Dowload sources from GIT"
   git:
